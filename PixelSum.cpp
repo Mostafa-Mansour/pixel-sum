@@ -10,36 +10,69 @@ PixelSum::PixelSum(const unsigned char* buffer, int xWidth, int yHeight) : buffe
 
     const size_t bufferPixelCount = this->width() * this->height();
     srcPtr = buffer;
+    nonZeroPtr = std::vector<unsigned char>(bufferPixelCount);
     sumAreaTable = std::vector<unsigned int>(bufferPixelCount);
-    zerosTable = std::vector<int>(bufferPixelCount);
+    nonZeroTable = std::vector<int>(bufferPixelCount);
 
     computeSumAreaTable();
+    computeNonZeroTable(bufferPixelCount);
 
 }
 
 void PixelSum::computeSumAreaTable() {
-    _frstRowCp();
-    _colWiseAdd();
-    _rowWiseAdd();
+    _frstRowCp(sumAreaTable, srcPtr);
+    _colWiseAdd(sumAreaTable, srcPtr);
+    _rowWiseAdd(sumAreaTable);
 
 }
 
-void PixelSum::_frstRowCp() {
+void PixelSum::computeNonZeroTable(size_t bufferPixelCount) {
+    for(unsigned int i=0; i < bufferPixelCount; i++){
+        if(srcPtr[i] != 0)
+            nonZeroPtr[i] = 1;
+        else
+            nonZeroPtr[i] = 0;
+    }
+    _frstRowCp(nonZeroTable, nonZeroPtr);
+    _colWiseAdd(nonZeroTable, nonZeroPtr);
+    _rowWiseAdd(nonZeroTable);
+
+}
+
+
+template<typename T, typename U>
+void PixelSum::_frstRowCp(T& table, U& src) {
     for(int i = 0; i < this->width(); i++)
-        sumAreaTable[i] = srcPtr[i];
+        table[i] = src[i];
 }
 
-void PixelSum::_colWiseAdd() {
+template<typename T, typename U>
+void PixelSum::_colWiseAdd(T& table, U& src) {
     for(int row = 1; row < this->height(); row++)
         for(int col = 0; col < this->width(); col++)
-            sumAreaTable[col + row*this->width()] = srcPtr[col + row*this->width()] + sumAreaTable[col + (row-1)*this->width()];
+            table[col + row*this->width()] = src[col + row*this->width()] + table[col + (row-1)*this->width()];
 
 }
 
-void PixelSum::_rowWiseAdd() {
+template<typename T>
+void PixelSum::_rowWiseAdd(T& table) {
     for(int row = 0; row < this->height(); row++)
         for(int col = 1; col < this->width(); col++)
-            sumAreaTable[col + row*this->width()] += sumAreaTable[col-1 + row*this->width()];
+            table[col + row*this->width()] += table[col-1 + row*this->width()];
+}
+
+
+
+int PixelSum::getNonZeroCount(int x0, int y0, int x1, int y1) const {
+    swapPoints(x0, y0, x1, y1);
+    return (int)getSubTableSum(nonZeroTable, x0, y0, x1, y1);
+}
+
+double PixelSum::getNonZeroAverage(int x0, int y0, int x1, int y1) const {
+    int nonZeroCount = getNonZeroCount(x0, y0, x1, y1);
+    unsigned int pixelSum = getPixelSum(x0, y0,x1, y1);
+    return (double)pixelSum/nonZeroCount;
+
 }
 
 unsigned int PixelSum::getPixelSum(int x0, int y0, int x1, int y1) const {

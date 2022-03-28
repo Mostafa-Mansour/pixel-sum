@@ -29,6 +29,7 @@ public:
     double getNonZeroAverage (int x0, int y0, int x1, int y1) const;
 
     void computeSumAreaTable();
+    void computeNonZeroTable(size_t);
 
 
     int width() const;
@@ -41,21 +42,28 @@ public:
 
     template<typename T>
     unsigned int getSubTableSum(const T&, int, int, int, int) const;
-    void _frstRowCp();
-    void _colWiseAdd();
-    void _rowWiseAdd();
+    template<typename T, typename U>
+    void _frstRowCp(T&, U&);
+    template<typename T, typename U>
+    void _colWiseAdd(T&, U&);
+    template<typename T>
+    void _rowWiseAdd(T&);
     unsigned int _getNumPixels(int, int , int ,int) const;
 
     std::vector<unsigned int>& getSumAreaTablePtr(){
         return sumAreaTable;
     }
 
+
+
 private:
     int  bufferWidth;
     int bufferHeight;
     std::vector<unsigned int> sumAreaTable; // unsigned int is enough as the max possible value is 255*4096*4096
-    std::vector<int>zerosTable;
+    std::vector<int>nonZeroTable;
     const unsigned char* srcPtr;
+    std::vector<unsigned char> nonZeroPtr;
+
 
 
 
