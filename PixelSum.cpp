@@ -49,8 +49,19 @@ unsigned int PixelSum::getPixelSum(int x0, int y0, int x1, int y1) const {
 
 }
 
+double PixelSum::getPixelAverage(int x0, int y0, int x1, int y1) const {
+    unsigned int sum = getPixelSum(x0, y0, x1, y1);
+    swapPoints(x0, y0, x1, y1);
+    return (double)sum/_getNumPixels(x0, y0, x1, y1);
+}
+
 template<typename T>
 unsigned int PixelSum::getSubTableSum(const T& srcTable , int x0, int y0, int x1, int y1) const{
+
+    if(y0 == y1){ // it is a line, not bounding box
+        std::cerr<<"Invalid box, y0 = y1"<<std::endl;
+        return 0;
+    }
 
     unsigned int res = srcTable[y1 + x1*this->width()]; // the sum between (0,0) and (x1,y1)
 
@@ -66,6 +77,10 @@ unsigned int PixelSum::getSubTableSum(const T& srcTable , int x0, int y0, int x1
 
 }
 
+unsigned int PixelSum::_getNumPixels(int x0, int y0, int x1 , int y1) const{
+
+    return (x1 - x0 + 1) * (y1 - y0 + 1);
+}
 
 
 void PixelSum::swapPoints(int &x0, int &y0, int &x1, int &y1) const {

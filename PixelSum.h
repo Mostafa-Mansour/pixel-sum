@@ -35,14 +35,20 @@ public:
 
     int height() const;
 
-    std::vector<unsigned int>& getSumAreaTablePtr(){
-        return sumAreaTable;
-    }
+
 
     void swapPoints(int&, int&, int&, int&) const;
 
     template<typename T>
     unsigned int getSubTableSum(const T&, int, int, int, int) const;
+    void _frstRowCp();
+    void _colWiseAdd();
+    void _rowWiseAdd();
+    unsigned int _getNumPixels(int, int , int ,int) const;
+
+    std::vector<unsigned int>& getSumAreaTablePtr(){
+        return sumAreaTable;
+    }
 
 private:
     int  bufferWidth;
@@ -51,9 +57,7 @@ private:
     std::vector<int>zerosTable;
     const unsigned char* srcPtr;
 
-    void _frstRowCp();
-    void _colWiseAdd();
-    void _rowWiseAdd();
+
 
 
 
