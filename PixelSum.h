@@ -39,6 +39,7 @@ public:
 
 
     void swapPoints(int&, int&, int&, int&) const;
+    void clampBorderPoints(int&, int&, int&, int&) const;
 
     template<typename T>
     unsigned int getSubTableSum(const T&, int, int, int, int) const;
@@ -57,7 +58,7 @@ public:
 
 
 private:
-    int  bufferWidth;
+    int bufferWidth;
     int bufferHeight;
     std::vector<unsigned int> sumAreaTable; // unsigned int is enough as the max possible value is 255*4096*4096
     std::vector<int>nonZeroTable;

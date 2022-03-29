@@ -27,12 +27,16 @@ void PixelSum::computeSumAreaTable() {
 }
 
 void PixelSum::computeNonZeroTable(size_t bufferPixelCount) {
+
+    // convert non zeros pixels to 1s
     for(unsigned int i=0; i < bufferPixelCount; i++){
         if(srcPtr[i] != 0)
             nonZeroPtr[i] = 1;
         else
             nonZeroPtr[i] = 0;
     }
+
+    // construct Sum Area Table for non zero pixels.
     _frstRowCp(nonZeroTable, nonZeroPtr);
     _colWiseAdd(nonZeroTable, nonZeroPtr);
     _rowWiseAdd(nonZeroTable);
@@ -65,6 +69,7 @@ void PixelSum::_rowWiseAdd(T& table) {
 
 int PixelSum::getNonZeroCount(int x0, int y0, int x1, int y1) const {
     swapPoints(x0, y0, x1, y1);
+    clampBorderPoints(x0, y0, x1, y1);
     return (int)getSubTableSum(nonZeroTable, x0, y0, x1, y1);
 }
 
@@ -78,6 +83,7 @@ double PixelSum::getNonZeroAverage(int x0, int y0, int x1, int y1) const {
 unsigned int PixelSum::getPixelSum(int x0, int y0, int x1, int y1) const {
 
     swapPoints(x0, y0, x1, y1);
+    clampBorderPoints(x0, y0, x1, y1);
     return getSubTableSum(sumAreaTable, x0, y0, x1, y1);
 
 }
@@ -85,6 +91,7 @@ unsigned int PixelSum::getPixelSum(int x0, int y0, int x1, int y1) const {
 double PixelSum::getPixelAverage(int x0, int y0, int x1, int y1) const {
     unsigned int sum = getPixelSum(x0, y0, x1, y1);
     swapPoints(x0, y0, x1, y1);
+
     return (double)sum/_getNumPixels(x0, y0, x1, y1);
 }
 
@@ -127,6 +134,21 @@ void PixelSum::swapPoints(int &x0, int &y0, int &x1, int &y1) const {
         y0 = y1;
         y1 = swapVar;
     }
+}
+void PixelSum::clampBorderPoints(int &x0, int &y0, int &x1, int &y1) const {
+
+    x0 = (x0 < 0) ? 0:x0;
+    x0 = (x0 >= this->width()) ? this->width()-1:x0;
+
+    x1 = (x1 < 0) ? 0:x1;
+    x1 = (x1 >= this->width()) ? this->width()-1:x1;
+
+    y0 = (y0 < 0) ? 0:y0;
+    y0 = (y0 >= this->height()) ? this->height()-1:y0;
+
+    y1 = (y1 < 0) ? 0:y1;
+    y1 = (y1 >= this->height()) ? this->height()-1:y1;
+
 }
 int PixelSum::height() const {return bufferHeight;}
 int PixelSum::width() const {return bufferWidth;}
