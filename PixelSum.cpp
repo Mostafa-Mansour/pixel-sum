@@ -6,16 +6,75 @@
 
 PixelSum::PixelSum(const unsigned char* buffer, int xWidth, int yHeight) : bufferWidth(xWidth), bufferHeight(yHeight){
 
-    if (xWidth * yHeight <= 0) return;
+    if (xWidth * yHeight <= 0)
+        throw std::invalid_argument("Invalid dimensions. The dimensions must be positive numbers");
+
+    if (!buffer)
+        throw std::invalid_argument("Buffer should not be a null pointer.");
 
     const size_t bufferPixelCount = this->width() * this->height();
-    srcPtr = buffer;
+    srcPtr =(buffer);
+
     nonZeroPtr = std::vector<unsigned char>(bufferPixelCount);
     sumAreaTable = std::vector<unsigned int>(bufferPixelCount);
     nonZeroTable = std::vector<int>(bufferPixelCount);
 
     computeSumAreaTable();
     computeNonZeroTable(bufferPixelCount);
+
+
+}
+
+PixelSum::PixelSum(const PixelSum &other){
+
+    std::cout<<"Copy constructor"<<std::endl;
+
+    this->srcPtr = other.getSrcPtr();
+    this->bufferWidth = other.width();
+    this->bufferHeight = other.height();
+    const size_t bufferPixelCount = this->width() * this->height();
+
+    this->nonZeroPtr = std::vector<unsigned char>(bufferPixelCount);
+    this->sumAreaTable = std::vector<unsigned int>(bufferPixelCount);
+    this->nonZeroTable = std::vector<int>(bufferPixelCount);
+
+    this->nonZeroPtr = other.getNonZeroPtr();   // vector assignment operator makes deep copy
+    this->sumAreaTable = other.getSumAreaTable();
+    this->nonZeroTable = other.getNonZeroTable();
+
+
+
+
+}
+
+PixelSum& PixelSum::operator=(const PixelSum &other) {
+
+    if(this != &other) {
+        std::cout << "Assignment" << std::endl;
+
+        this->srcPtr = other.getSrcPtr();
+        this->bufferWidth = other.width();
+        this->bufferHeight = other.height();
+        const size_t bufferPixelCount = this->width() * this->height();
+
+
+        this->nonZeroPtr.resize(bufferPixelCount);
+        this->nonZeroTable.resize(bufferPixelCount);
+        this->sumAreaTable.resize(bufferPixelCount);
+
+        this->nonZeroPtr = other.getNonZeroPtr();   // vector assignment operator makes deep copy
+        this->sumAreaTable = other.getSumAreaTable();
+        this->nonZeroTable = other.getNonZeroTable();
+    }
+
+    return *this;
+
+
+
+
+}
+
+PixelSum::~PixelSum(){
 
 }
 
@@ -76,6 +135,8 @@ int PixelSum::getNonZeroCount(int x0, int y0, int x1, int y1) const {
 double PixelSum::getNonZeroAverage(int x0, int y0, int x1, int y1) const {
     int nonZeroCount = getNonZeroCount(x0, y0, x1, y1);
     unsigned int pixelSum = getPixelSum(x0, y0,x1, y1);
+    if(nonZeroCount == 0)
+        return 0;
     return (double)pixelSum/nonZeroCount;
 
 }
@@ -98,10 +159,9 @@ double PixelSum::getPixelAverage(int x0, int y0, int x1, int y1) const {
 template<typename T>
 unsigned int PixelSum::getSubTableSum(const T& srcTable , int x0, int y0, int x1, int y1) const{
 
-    if(y0 == y1){ // it is a line, not bounding box
-        std::cerr<<"Invalid box, y0 = y1"<<std::endl;
-        return 0;
-    }
+    /*if( (y0 == y1) || (x0 == x1)){ // it is a line, not bounding box
+        throw std::invalid_argument("invalid arguments");
+    }*/
 
     unsigned int res = srcTable[y1 + x1*this->width()]; // the sum between (0,0) and (x1,y1)
 
