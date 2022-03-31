@@ -8,12 +8,17 @@
 
 #include <vector>
 #include "UnitTest.h"
+#include "TestSwapPoints.h"
+#include "TestClampBorderPoints.h"
+
 
 class TestCases
 {
 public:
     TestCases();
     virtual ~TestCases();
+    TestSwapPoints testSwapPoints;
+    TestClampBorderPoints testClampBorderPoints;
     void run();
     std::vector<UnitTest> testCases;
 };

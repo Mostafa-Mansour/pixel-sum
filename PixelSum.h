@@ -30,6 +30,8 @@ class PixelSum {
    *    getNonZeroSumTable: return nonZeroSumTable (see private members).
    *    getNonZeroTable: return nonZeroTable (see private members).
    *    getSumAreaTable: return sumAreaTable (see private members).
+   *    swapPoints: A function to swap the coordinates of the query window if needed.
+   *    clampBorderPoints: A function to clamp the window coordinates if needed (for coordinates out of the buffer range).
    *
    * private:
    *    bufferWidth: Buffer width. The width of the buffer at which srcPtr is pointing.
@@ -41,8 +43,6 @@ class PixelSum {
    *
    *    computeSumAreaTable: A function implements Sum Area Table algorithm and saves the values in sumAreaTable. More information about the algorithm can be found in (https://www.geeksforgeeks.org/submatrix-sum-queries/).
    *    computeNonZeroSumTable: A function implements Sum Area Table algorithm for NonZeroTable and saves the values in nonZeroSumTable.
-   *    swapPoints: A function to swap the coordinates of the query window if needed.
-   *    clampBorderPoints: A function to clamp the window coordinates if needed (for coordinates out of the buffer range).
    *    getNumPixels: A function to compute the number of pixels within a given window.
    *    getSubTableSum: A function to compute the sum query of a sub matrix from sumAreaTable. More information (https://www.geeksforgeeks.org/summed-area-table-submatrix-summation/)
    *    frstRowCp, colWiseAdd, rowWiseAdd: Intermediate functions to compute sumAreaTable. More information (https://www.geeksforgeeks.org/submatrix-sum-queries/)
@@ -72,6 +72,9 @@ public:
     std::vector<unsigned char> getNonZeroTable() const {return nonZeroTable;}
     std::vector<unsigned int> getSumAreaTable() const{return sumAreaTable;}
 
+  void swapPoints(int&, int&, int&, int&) const;
+  void clampBorderPoints(int&, int&, int&, int&) const;
+
 
 private:
     int bufferWidth;
@@ -83,8 +86,6 @@ private:
 
     void computeSumAreaTable();
     void computeNonZeroSumTable(size_t);
-    void swapPoints(int&, int&, int&, int&) const;
-    void clampBorderPoints(int&, int&, int&, int&) const;
     unsigned int getNumPixels(int, int , int ,int) const;
 
     template<typename T>

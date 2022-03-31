@@ -4,15 +4,23 @@
 
 #include "TestCases.h"
 #include "UnitTest.h"
-#include "PixelSum.h"
+#include "../PixelSum.h"
+#include "dataForTestSwapPoints.h"
+#include "dataForTestClampBorderPoints.h"
 #include <iostream>
 
-#define MAX_WIDTH 4096
-#define MAX_HEIGHT 4096
+#define MAX_WIDTH 4096L
+#define MAX_HEIGHT 4096L
 #define MAX_VALUE 255
 #define MAX_SIZE MAX_WIDTH*MAX_HEIGHT
 
-TestCases::TestCases()
+
+
+
+
+
+TestCases::TestCases():testSwapPoints(pointsBeforeSwap, expectedPointsAfterSwap, testCasesNames),
+testClampBorderPoints(borderPointsBeforeClamping, expectedBorderPointsAfterClamping, testCasesNamesForClamping)
 {
     // Prepare variables
     std::string name;
@@ -308,7 +316,7 @@ TestCases::TestCases()
     x0 = 0, y0 = 0;
     x1 = MAX_WIDTH - 1 , y1 = MAX_HEIGHT - 1;
     // Expected results
-    pixelSum = MAX_WIDTH * MAX_HEIGHT * MAX_VALUE;
+    pixelSum = (unsigned int) (MAX_WIDTH * MAX_HEIGHT * MAX_VALUE);
     pixelAvg = MAX_VALUE;
     nonZeroCount = MAX_WIDTH * MAX_HEIGHT;
     nonZeroAverage = MAX_VALUE;
@@ -411,12 +419,19 @@ void TestCases::run()
 {
     int numTestCases = testCases.size();
     int numTestPassed = 0;
+    std::cout<<"----------Testing PixelSum interface methods-------------"<<std::endl;
     for (int i = 0; i < testCases.size(); i++)
     {
         testCases[i].run();
         if (testCases[i].passed)
             numTestPassed++;
     }
-    std::cout << std::endl << "-----------------------------------------------" << std::endl;
-    std::cout << "Tests are done. Passed: "<< numTestPassed<< "/" << numTestCases << std::endl;
+    std::cout << std::endl << "-----------------------------------------" << std::endl;
+    std::cout << "PixelSum tests completed. Passed: "<< numTestPassed<< "/" << numTestCases << std::endl;
+    std::cout<<"----------Testing Swap Points function-------------"<<std::endl;
+    testSwapPoints.run();
+    std::cout<<"----------Testing Clamp border points function-------------"<<std::endl;
+    testClampBorderPoints.run();
+
+
 }

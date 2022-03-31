@@ -12,4 +12,4 @@ add_executable(pixelSum
         tests/TestCases.h
         tests/UnitTest.cpp
         tests/UnitTest.h
-        )
+        tests/TestSwapPoints.cpp tests/TestSwapPoints.h tests/dataForTestSwapPoints.h tests/TestClampBorderPoints.cpp tests/TestClampBorderPoints.h tests/dataForTestClampBorderPoints.h)

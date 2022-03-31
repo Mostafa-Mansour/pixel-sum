@@ -40,7 +40,7 @@ void UnitTest::run()
     if(passed)
         std::cout<<testData.name<<" :Passed."<< std::endl;
     else
-        std::cout<<testData.name<<" Failed."<<std::endl;
+        std::cerr<<testData.name<<" Failed."<<std::endl;
     std::cout << "---------------------------------------------------------------------------------------" << std::endl;
 }
 
