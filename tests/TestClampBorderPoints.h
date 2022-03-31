@@ -12,11 +12,11 @@
 
 class TestClampBorderPoints {
  public:
-  TestClampBorderPoints(std::vector<const std::vector<int>>&, std::vector<const std::vector<int>>&,std::vector<const std::string>& );
-  std::vector<const std::vector<int>> borderPointsBeforeClamping;
-  std::vector<const std::vector<int>> borderPointsAfterClamping;
-  std::vector<const std::string> testCasesNames;
-  const std::vector<int> getClampResults(const std::vector<int>& , PixelSum&);
+  TestClampBorderPoints(std::vector<std::vector<int>>&, std::vector<std::vector<int>>&,std::vector<std::string>& );
+  std::vector<std::vector<int>> borderPointsBeforeClamping;
+  std::vector<std::vector<int>> borderPointsAfterClamping;
+  std::vector<std::string> testCasesNames;
+  std::vector<int> getClampResults(std::vector<int>& , PixelSum&);
   void run();
 };
 

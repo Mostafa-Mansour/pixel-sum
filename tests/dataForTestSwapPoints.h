@@ -5,7 +5,7 @@
 #ifndef PIXELSUM_DATAFORTESTSWAPPOINTS_H
 #define PIXELSUM_DATAFORTESTSWAPPOINTS_H
 // Test cases data for SwapFunction
-std::vector<const std::vector<int>> pointsBeforeSwap{
+std::vector<std::vector<int>> pointsBeforeSwap{
     // Test cases
     {0,1,0,1},  // x0=x1, y0=y1
     {2,1,4,8},  // x1>x0, y1>y0
@@ -15,7 +15,7 @@ std::vector<const std::vector<int>> pointsBeforeSwap{
     {-4,-7,-2,-3}, // negative coordinates
 };
 
-std::vector<const std::vector<int>> expectedPointsAfterSwap{
+std::vector<std::vector<int>> expectedPointsAfterSwap{
     // Expected results
     {0,1,0,1},
     {2,1,4,8},
@@ -25,7 +25,7 @@ std::vector<const std::vector<int>> expectedPointsAfterSwap{
     {-4,-7,-2,-3}
 };
 
-std::vector<const std::string> testCasesNames{
+std::vector<std::string> testCasesNames{
     "x0=x1, y0-y1",
     "x1>x0, y1>y0",
     "x1<x0, y1>y0",

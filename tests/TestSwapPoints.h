@@ -14,11 +14,11 @@
 class TestSwapPoints{
 
  public:
-  TestSwapPoints(std::vector<const std::vector<int>>&, std::vector<const std::vector<int>>&,std::vector<const std::string>& );
-  std::vector<const std::vector<int>> pointsBeforeSwap;
-  std::vector<const std::vector<int>> expectedPointsAfterSwap;
-  std::vector<const std::string> testCasesNames;
-  const std::vector<int> getSwapResults(const std::vector<int>& , PixelSum&);
+  TestSwapPoints(std::vector<std::vector<int>>&, std::vector<std::vector<int>>&,std::vector<std::string>& );
+  std::vector<std::vector<int>> pointsBeforeSwap;
+  std::vector<std::vector<int>> expectedPointsAfterSwap;
+  std::vector<std::string> testCasesNames;
+  std::vector<int> getSwapResults(std::vector<int>& , PixelSum&);
   void run();
 
 };

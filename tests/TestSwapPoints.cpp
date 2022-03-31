@@ -20,21 +20,22 @@ std::string printWindowCoordinatesForSwapFunction(const std::vector<int>& window
 
 }
 
-TestSwapPoints::TestSwapPoints(std::vector<const std::vector<int>> &pointsBeforeSwap,
-                               std::vector<const std::vector<int>> &expectedPointsAfterSwap,
-                               std::vector<const std::string> &testCasesNames) : pointsBeforeSwap(pointsBeforeSwap),
+TestSwapPoints::TestSwapPoints(std::vector<std::vector<int>> &pointsBeforeSwap,
+                               std::vector<std::vector<int>> &expectedPointsAfterSwap,
+                               std::vector<std::string> &testCasesNames) : pointsBeforeSwap(pointsBeforeSwap),
                                expectedPointsAfterSwap(expectedPointsAfterSwap), testCasesNames(testCasesNames){
 
 }
 
-const std::vector<int> TestSwapPoints::getSwapResults(const std::vector<int>& testVec, PixelSum& pixelSum){
+ std::vector<int> TestSwapPoints::getSwapResults(std::vector<int>& testVec, PixelSum& pixelSum){
   int x0 = testVec[0];
   int y0 = testVec[1];
   int x1 = testVec[2];
   int y1 = testVec[3];
 
   pixelSum.swapPoints(x0, y0, x1, y1);
-  return std::vector<int>({x0,y0,x1,y1});
+  std::vector<int> res({x0,y0,x1,y1});
+  return res;
 
 }
 

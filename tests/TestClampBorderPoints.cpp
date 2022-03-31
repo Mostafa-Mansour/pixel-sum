@@ -14,15 +14,15 @@ std::string printWindowCoordinatesForClampingFunction(const std::vector<int>& wi
   return str;
 
 }
-TestClampBorderPoints::TestClampBorderPoints(std::vector<const std::vector<int>> & borderPointsBeforeClamping,
-                                             std::vector<const std::vector<int>> & borderPointsAfterClamping,
-                                             std::vector<const std::string> & testCasesNames) :
+TestClampBorderPoints::TestClampBorderPoints(std::vector<std::vector<int>> & borderPointsBeforeClamping,
+                                             std::vector<std::vector<int>> & borderPointsAfterClamping,
+                                             std::vector<std::string> & testCasesNames) :
                                              borderPointsBeforeClamping(borderPointsBeforeClamping),
                                              borderPointsAfterClamping(borderPointsAfterClamping), testCasesNames(testCasesNames) {
 
 
 }
-const std::vector<int> TestClampBorderPoints::getClampResults(const std::vector<int>& testVec, PixelSum& pixelSum){
+std::vector<int> TestClampBorderPoints::getClampResults(std::vector<int>& testVec, PixelSum& pixelSum){
   int x0 = testVec[0];
   int y0 = testVec[1];
   int x1 = testVec[2];

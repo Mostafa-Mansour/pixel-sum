@@ -9,7 +9,7 @@
 #define MAX_WIDTH 4096L
 #define MAX_HEIGHT 4096L
 // Test cases data for ClampBorders
-std::vector<const std::vector<int>> borderPointsBeforeClamping{
+std::vector<std::vector<int>> borderPointsBeforeClamping{
     // Test cases
     {0,1,0,1},  // one pixel
     {-10, -2, -9, -1},  // negative, both points are outside the buffer
@@ -27,7 +27,7 @@ std::vector<const std::vector<int>> borderPointsBeforeClamping{
     {MAX_WIDTH+10, 5, MAX_WIDTH+4, 8}, // outside rectangular window to the right of the image
 };
 
-std::vector<const std::vector<int>> expectedBorderPointsAfterClamping{
+std::vector<std::vector<int>> expectedBorderPointsAfterClamping{
     // Expected results
     {0,1,0,1},
     {0,0,0,0},
@@ -45,7 +45,7 @@ std::vector<const std::vector<int>> expectedBorderPointsAfterClamping{
     {MAX_WIDTH-1, 5, MAX_WIDTH-1, 8}, // outside rectangular window to the right of the image
 };
 
-std::vector<const std::string> testCasesNamesForClamping{
+std::vector<std::string> testCasesNamesForClamping{
     "one pixel inside",
     "negative, both points are outside the buffer",
     "one point (both coordinates - equal to the maximum dimension) outside the buffer",
