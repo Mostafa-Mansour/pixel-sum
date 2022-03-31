@@ -36,7 +36,7 @@ std::vector<int> TestClampBorderPoints::getClampResults(std::vector<int>& testVe
 void TestClampBorderPoints::run(){
   const unsigned char* buffer = new unsigned char(0); // to be able to use PixelSum class
   PixelSum pixelSum(buffer, MAX_DIMENSION, MAX_DIMENSION);
-
+  delete buffer;
   int countCases = borderPointsBeforeClamping.size();
 
   if((borderPointsAfterClamping.size() != countCases) || (testCasesNames.size() != countCases))

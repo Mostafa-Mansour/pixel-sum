@@ -42,7 +42,7 @@ TestSwapPoints::TestSwapPoints(std::vector<std::vector<int>> &pointsBeforeSwap,
 void TestSwapPoints::run(){
   const unsigned char* buffer = new unsigned char(0); // to be able to use PixelSum class
   PixelSum pixelSum(buffer, MAX_DIMENSION, MAX_DIMENSION);
-
+  delete buffer;
   int countCases = pointsBeforeSwap.size();
 
   if((expectedPointsAfterSwap.size() != countCases) || (testCasesNames.size() != countCases))
