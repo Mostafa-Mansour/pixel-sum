@@ -12,6 +12,9 @@
 
 
 class TestSwapPoints{
+  /*
+   * Class to implement unit test for Swap points function.
+   */
 
  public:
   TestSwapPoints(std::vector<std::vector<int>>&, std::vector<std::vector<int>>&,std::vector<std::string>& );

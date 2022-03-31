@@ -11,6 +11,9 @@
 #include <string>
 
 class TestClampBorderPoints {
+  /*
+   * Class to implement unit test for clampBorderPoints function
+   */
  public:
   TestClampBorderPoints(std::vector<std::vector<int>>&, std::vector<std::vector<int>>&,std::vector<std::string>& );
   std::vector<std::vector<int>> borderPointsBeforeClamping;

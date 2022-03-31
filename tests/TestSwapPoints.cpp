@@ -7,8 +7,6 @@
 #include <string>
 #include "TestSwapPoints.h"
 
-#define MAX_DIMENSION 4096
-
 
 std::string printWindowCoordinatesForSwapFunction(const std::vector<int>& windowCoordinates){
   std::string str="{";
@@ -40,9 +38,11 @@ TestSwapPoints::TestSwapPoints(std::vector<std::vector<int>> &pointsBeforeSwap,
 }
 
 void TestSwapPoints::run(){
-  const unsigned char* buffer = new unsigned char(0); // to be able to use PixelSum class
-  PixelSum pixelSum(buffer, MAX_DIMENSION, MAX_DIMENSION);
-  delete buffer;
+  std::vector<unsigned char> bufferVec({3,4,43,12,10,22}); // Dummy buffer to instantiate PixelSum class
+  unsigned char* buffer = new unsigned char[bufferVec.size()];
+  std::copy(bufferVec.begin(), bufferVec.end(), buffer);
+  PixelSum pixelSum(buffer, 2, 3);
+  delete[] buffer;
   int countCases = pointsBeforeSwap.size();
 
   if((expectedPointsAfterSwap.size() != countCases) || (testCasesNames.size() != countCases))
