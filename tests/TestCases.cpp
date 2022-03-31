@@ -1,43 +1,18 @@
 //
-// Created by Mostafa Mansour on 3/29/22.
+// Created by Mostafa Mansour on 3/28/22.
 //
 
-#include "s.h"
-Skip to content
-        Search or jump to…
-Pull requests
-Issues
-        Marketplace
-Explore
-
-@Mostafa-Mansour
-        feklistoff
-/
-PixelSum
-        Public
-Code
-        Issues
-Pull requests
-Actions
-        Projects
-Wiki
-        Security
-Insights
-        PixelSum/src/Tests.cpp
-
-        Andrei Feklistov PixelSum and tests
-        Latest commit c8abc47 on 27 Jul 2019
-History
-0 contributors
-455 lines (410 sloc)  12.2 KB
-
-#include "Tests.h"
+#include "TestCases.h"
 #include "UnitTest.h"
 #include "PixelSum.h"
 #include <iostream>
 
+#define MAX_WIDTH 4096
+#define MAX_HEIGHT 4096
+#define MAX_VALUE 255
+#define MAX_SIZE MAX_WIDTH*MAX_HEIGHT
 
-Tests::Tests()
+TestCases::TestCases()
 {
     // Prepare variables
     std::string name;
@@ -49,13 +24,9 @@ Tests::Tests()
     int nonZeroCount;
     double nonZeroAverage;
 
-    // ---------------------------------------------------------
-    //      Most Common Cases
-    // ---------------------------------------------------------
+
     // CASE 1
-    // name
-    name = "PixelSum data structure and operations simple check";
-    // data
+    name = "Case 1: PixelSum data structure and operations simple check";
     xWidth = 5;
     yHeight = 5;
     buffer =
@@ -68,101 +39,92 @@ Tests::Tests()
             };
     x0 = 1, y0 = 1;
     x1 = 3, y1 = 2;
-    // answers
+    // Expected results
     pixelSum = 9;
     pixelAvg = 1.5;
     nonZeroCount = 6;
     nonZeroAverage = 1.5;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
     // ---------------------------------------------------------
     // CASE 2
-    // name
-    name = "One pixel buffer";
-    // data
+    name = "Case 2: One pixel buffer";
+
     xWidth = 1;
     yHeight = 1;
     buffer = {1};
     x0 = 0, y0 = 0;
     x1 = 0, y1 = 0;
-    // answers
+    // Expected results
     pixelSum = 1;
     pixelAvg = 1;
     nonZeroCount = 1;
     nonZeroAverage = 1;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 3
-    // name
-    name = "One pixel buffer (value 0)";
-    // data
+    name = "Case 3: One pixel buffer (value 0)";
+
     xWidth = 1;
     yHeight = 1;
     buffer = {0};
     x0 = 0, y0 = 0;
     x1 = 0, y1 = 0;
-    // answers
+    // Expected results
     pixelSum = 0;
     pixelAvg = 0;
     nonZeroCount = 0;
     nonZeroAverage = 0;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 4
-    // name
-    name = "One-dimentional buffer (row)";
-    // data
+    name = "Case 4: One-dimentional buffer (row)";
+
     xWidth = 4;
     yHeight = 1;
     buffer = {0, 1, 2, 3};
     x0 = 0, y0 = 0;
     x1 = 2, y1 = 0;
-    // answers
+    // Expected results
     pixelSum = 3;
     pixelAvg = 1;
     nonZeroCount = 2;
     nonZeroAverage = 1.5;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 5
-    // name
-    name = "One-dimentional buffer (row with zeros)";
-    // data
+    name = "Case 5: One-dimentional buffer (row with zeros)";
+
     xWidth = 4;
     yHeight = 1;
     buffer = {0, 1, 0, 1};
     x0 = 0, y0 = 0;
     x1 = 2, y1 = 0;
-    // answers
+    // Expected results
     pixelSum = 1;
     pixelAvg = 0.333;
     nonZeroCount = 1;
     nonZeroAverage = 1;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 6
-    // name
-    name = "One-dimentional buffer (column)";
-    // data
+    name = "Case 6: One-dimentional buffer (column)";
+
     xWidth = 1;
     yHeight = 4;
     buffer = {0,
@@ -171,42 +133,38 @@ Tests::Tests()
               3};
     x0 = 0, y0 = 0;
     x1 = 0, y1 = 2;
-    // answers
+    // Expected results
     pixelSum = 3;
     pixelAvg = 1;
     nonZeroCount = 2;
     nonZeroAverage = 1.5;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 7
-    // name
-    name = "Rectangular buffer";
-    // data
+    name = "Case 7: Rectangular buffer";
+
     xWidth = 4;
     yHeight = 2;
     buffer = {0, 255, 255, 128,
               128, 255, 128, 0};
     x0 = 2, y0 = 0;
     x1 = 3, y1 = 1;
-    // answers
+    // Expected results
     pixelSum = 511;
     pixelAvg = 127.75;
     nonZeroCount = 3;
     nonZeroAverage = 170.333;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 8
-    // name
-    name = "Rectangular buffer";
-    // data
+    name = "Case 8: Rectangular buffer";
+
     xWidth = 2;
     yHeight = 4;
     buffer = {1, 128,
@@ -215,23 +173,20 @@ Tests::Tests()
               255, 10};
     x0 = 0, y0 = 3;
     x1 = 1, y1 = 1;
-    // answers
+    // Expected results
     pixelSum = 493;
     pixelAvg = 82.166;
     nonZeroCount = 4;
     nonZeroAverage = 123.25;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
-    //      Search Window Extends Outside the Buffer
-    // ---------------------------------------------------------
+
     // CASE 9
-    // name
-    name = "Search window extends outside the buffer (bottom right)";
-    // data
+    name = "case 9: Search window extends outside the buffer (bottom right)";
+
     xWidth = 5;
     yHeight = 5;
     buffer =
@@ -244,21 +199,19 @@ Tests::Tests()
             };
     x0 = 4, y0 = 4;
     x1 = 5, y1 = 5;
-    // answers
+    // Expected results
     pixelSum = 3;
     pixelAvg = 0.75;
     nonZeroCount = 1;
     nonZeroAverage = 3;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 10
-    // name
-    name = "Search window extends outside the buffer (bottom left)";
-    // data
+    name = "Case 10: Search window extends outside the buffer (bottom left)";
+
     xWidth = 5;
     yHeight = 5;
     buffer =
@@ -271,21 +224,19 @@ Tests::Tests()
             };
     x0 = -1, y0 = 5;
     x1 = 1, y1 = 2;
-    // answers
+    // Expected results
     pixelSum = 12;
     pixelAvg = 1;
     nonZeroCount = 6;
     nonZeroAverage = 2;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 11
-    // name
-    name = "Search window extends completely outside the buffer";
-    // data
+    name = "case 11: Search window extends completely outside the buffer";
+
     xWidth = 2;
     yHeight = 2;
     buffer =
@@ -295,21 +246,18 @@ Tests::Tests()
             };
     x0 = 10, y0 = 10;
     x1 = 20, y1 = 20;
-    // answers
+    // Expected results
     pixelSum = 0;
     pixelAvg = 0;
     nonZeroCount = 0;
     nonZeroAverage = 0;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
-
-    // ---------------------------------------------------------
     // CASE 12
-    // name
-    name = "Search window extends outside the buffer";
-    // data
+    name = "Case 12: Search window extends outside the buffer";
+
     xWidth = 2;
     yHeight = 2;
     buffer =
@@ -319,21 +267,19 @@ Tests::Tests()
             };
     x0 = 1, y0 = 1;
     x1 = 3, y1 = 3;
-    // answers
+    // Expected results
     pixelSum = 1;
     pixelAvg = 0.111;
     nonZeroCount = 1;
     nonZeroAverage = 1;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
     // CASE 13
-    // name
-    name = "Search window extends outside the buffer";
-    // data
+    name = "Case 13: Search window extends outside the buffer";
+
     xWidth = 2;
     yHeight = 2;
     buffer =
@@ -343,65 +289,57 @@ Tests::Tests()
             };
     x0 = 0, y0 = 0;
     x1 = 3, y1 = 3;
-    // answers
+    // Expected results
     pixelSum = 4;
     pixelAvg = 0.25;
     nonZeroCount = 4;
     nonZeroAverage = 1;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
-    //      Edge cases (max buffer)
-    // ---------------------------------------------------------
     // CASE 14
-    // name
-    name = "Max buffer size (4096x4096) with max pixel value (255)";
-    // data
+    name = "case 14: Max buffer size (4096x4096) with max pixel value (255)";
+
     xWidth = MAX_WIDTH;
     yHeight = MAX_HEIGHT;
     std::vector<unsigned char> maxBuffer(MAX_SIZE, MAX_VALUE);
     x0 = 0, y0 = 0;
     x1 = MAX_WIDTH - 1 , y1 = MAX_HEIGHT - 1;
-    // answers
-    pixelSum = 4278190080; // MAX_WIDTH * MAX_HEIGHT * MAX_VALUE
-    pixelAvg = MAX_VALUE; //255
-    nonZeroCount = MAX_WIDTH * MAX_HEIGHT; // 16777216
-    nonZeroAverage = MAX_VALUE; // 255
+    // Expected results
+    pixelSum = MAX_WIDTH * MAX_HEIGHT * MAX_VALUE;
+    pixelAvg = MAX_VALUE;
+    nonZeroCount = MAX_WIDTH * MAX_HEIGHT;
+    nonZeroAverage = MAX_VALUE;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               maxBuffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
+
     // CASE 15
-    // name
-    name = "Max buffer size (4096x4096) with min pixel value (0)";
-    // data
+
+    name = "case 15: Max buffer size (4096x4096) with min pixel value (0)";
+
     xWidth = MAX_WIDTH;
     yHeight = MAX_HEIGHT;
     std::vector<unsigned char> minBuffer(MAX_SIZE, 0);
     x0 = 0, y0 = 0;
     x1 = MAX_WIDTH - 1 , y1 = MAX_HEIGHT - 1;
-    // answers
+    // Expected results
     pixelSum = 0;
     pixelAvg = 0;
     nonZeroCount = 0;
     nonZeroAverage = 0;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               minBuffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
-    //      Check copy and assignment constructors
-    // ---------------------------------------------------------
     // CASE 16
-    // name
-    name = "Check PixelSum copy constructor";
-    // data
+    name = "Case 16: Check PixelSum copy constructor";
+
     xWidth = 3;
     yHeight = 3;
     buffer =
@@ -422,21 +360,20 @@ Tests::Tests()
 
     // check copy (create second PixelSum object)
     PixelSum pixelSumCopy(pixelSum1);
-    // answers (sort of)
+    // Expected results
     pixelSum = pixelSumCopy.getPixelSum(x0, y0, x1, y1); // 4
     pixelAvg = pixelSumCopy.getPixelAverage(x0, y0, x1, y1); // 1;
     nonZeroCount = pixelSumCopy.getNonZeroCount(x0, y0, x1, y1); // 4;
     nonZeroAverage = pixelSumCopy.getNonZeroAverage(x0, y0, x1, y1); // 1;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 
-    // ---------------------------------------------------------
+
     // CASE 17
-    // name
-    name = "Check PixelSum assign operator";
-    // data
+    name = "Case 17: Check PixelSum assign operator";
+
     xWidth = 2;
     yHeight = 2;
     buffer=
@@ -457,45 +394,29 @@ Tests::Tests()
     // check assign (create second PixelSum object)
     PixelSum pixelSumAssign(pixelSum1);
     pixelSumAssign = pixelSum2;
-    // answers (sort of)
+    // Expected results
     pixelSum = pixelSumAssign.getPixelSum(x0, y0, x1, y1); // 40
     pixelAvg = pixelSumAssign.getPixelAverage(x0, y0, x1, y1); // 10;
     nonZeroCount = pixelSumAssign.getNonZeroCount(x0, y0, x1, y1); // 4;
     nonZeroAverage = pixelSumAssign.getNonZeroAverage(x0, y0, x1, y1); // 10;
 
-    tests.push_back(UnitTest({name, xWidth, yHeight,
+    testCases.push_back(UnitTest({name, xWidth, yHeight,
                               buffer, x0, y0, x1, y1,
                               pixelSum, pixelAvg, nonZeroCount, nonZeroAverage}));
 }
 
-Tests::~Tests() {}
+TestCases::~TestCases() {}
 
-void Tests::run()
+void TestCases::run()
 {
-    int numOfTests = tests.size();
-    int numOfPassed = 0;
-    for (int i = 0; i < tests.size(); i++)
+    int numTestCases = testCases.size();
+    int numTestPassed = 0;
+    for (int i = 0; i < testCases.size(); i++)
     {
-        tests[i].run();
-        if (tests[i].passed)
-        {
-            numOfPassed++;
-        }
+        testCases[i].run();
+        if (testCases[i].passed)
+            numTestPassed++;
     }
-
-    std::cout << std::endl << "-------------- TESTING RESULTS --------------" << std::endl;
-    std::cout << "Tests passed: " << numOfPassed << " out of " << numOfTests << std::endl;
+    std::cout << std::endl << "-----------------------------------------------" << std::endl;
+    std::cout << "Tests are done. Passed: "<< numTestPassed<< "/" << numTestCases << std::endl;
 }
-© 2022 GitHub, Inc.
-Terms
-        Privacy
-Security
-        Status
-Docs
-        Contact GitHub
-        Pricing
-API
-        Training
-Blog
-        About
-Loading complete
