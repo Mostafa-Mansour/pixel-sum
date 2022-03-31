@@ -6,7 +6,6 @@
 #define PIXELSUM_PIXELSUM_H
 
 
-#include <sys/_types/_u_int.h>
 #include <vector>
 #include <memory>
 
