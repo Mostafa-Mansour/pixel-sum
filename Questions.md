@@ -61,7 +61,6 @@ copy data from the host to the device (GPU) \
 kernel invoking \
 wait for synchronization \
 copy data from device to host \
-free unified memory 
-
+free unified memory
 }
 
