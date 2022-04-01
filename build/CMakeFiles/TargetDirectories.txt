@@ -1,0 +1,3 @@
+/Users/mansour/CLionProjects/pixelSum/build/CMakeFiles/rebuild_cache.dir
+/Users/mansour/CLionProjects/pixelSum/build/CMakeFiles/edit_cache.dir
+/Users/mansour/CLionProjects/pixelSum/build/CMakeFiles/pixelSum.dir

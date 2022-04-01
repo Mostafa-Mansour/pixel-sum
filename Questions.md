@@ -51,17 +51,17 @@ calculated. We should wait until the cores are synchronized. When we are done, T
 determine the number of threads that can implement different queries by determining the grid size. During invoking these functions, an execution configuration should be used
 to determine number of blocks and number of threads per block ( <num_block, num_threads>).
 
-__global__
+\__global__ \
 interface functions
 
 main(){
 
-unified memory allocation
-copy data from the host to the device (GPU)
-kernel invoking
-wait for synchronization
-copy data from device to host
-free unified memory
+unified memory allocation \
+copy data from the host to the device (GPU) \
+kernel invoking \
+wait for synchronization \
+copy data from device to host \
+free unified memory 
 
 }
 

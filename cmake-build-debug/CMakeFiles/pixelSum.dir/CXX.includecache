@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/mansour/CLionProjects/pixelSum/PixelSum.h
+sys/_types/_u_int.h
+-
+vector
+-
+memory
+-
+
+/Users/mansour/CLionProjects/pixelSum/tests/TestClampBorderPoints.cpp
+TestClampBorderPoints.h
+/Users/mansour/CLionProjects/pixelSum/tests/TestClampBorderPoints.h
+
+/Users/mansour/CLionProjects/pixelSum/tests/TestClampBorderPoints.h
+iostream
+-
+vector
+-
+../PixelSum.h
+/Users/mansour/CLionProjects/pixelSum/PixelSum.h
+string
+-
+
