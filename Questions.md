@@ -36,6 +36,7 @@ O-complexity. \
 The brute force approach here is to have a linear search within the window with complexity O(N). However, with tons of
 queries, it will become O(QxN) where Q is the number of Queries. One possible solution is to use sparse table approach or Range "Maximum" Query. For 2D (NxM) image, a precomputation step can be done
 to make a data structure with O(MlogM x NlogN) complexity in time a space (however there are some papers suggensts some technique to get the complexity down to O(MN).
+After this precomputation, the query time complexity will be constant O(1).
 ---
 #### 4- How would multi-threading change your implementation? What kinds of performance benefits would you expect? 
 
